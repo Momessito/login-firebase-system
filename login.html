@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Protegida</title>
+</head>
+<body>
+  <div id="conteudo">
+    <h1>Informações do Usuário</h1>
+    <p>Email: <span id="emailUsuario"></span></p>
+    <p>UID: <span id="uidUsuario"></span></p>
+    <button id="btnSair">Sair</button>
+  </div>
+  <script src="app.js"></script>
+
+  <script>
+    if (!verificarLogado()) {
+      window.location.href = '/index.html';
+    } else {
+      const usuario = obterInformacoesUsuarioLocalmente();
+      if (usuario) {
+        document.getElementById('emailUsuario').textContent = usuario.email;
+        document.getElementById('uidUsuario').textContent = usuario.uid;
+      }
+    }
+    const btnSair = document.getElementById('btnSair');
+    btnSair.addEventListener('click', () => {
+      localStorage.removeItem('usuario');
+      localStorage.removeItem('logado');
+      window.location.href = 'index.html';
+    });
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+</body>
+</html>
